@@ -1,40 +1,36 @@
-# Welcome to Remix!
+# GitHub User Search
 
-- 📖 [Remix docs](https://remix.run/docs)
+This project is a simple GitHub user search app. It's written in [TypeScript](https://www.typescriptlang.org/), using [Remix](https://remix.run/), [React.js](https://react.dev/) and [Tailwind CSS](https://tailwindcss.com/). I've deployed this project on [Vercel](https://vercel.com/).
 
-## Development
+## Get started
 
-Run the dev server:
+1. Clone the repository:
 
-```shellscript
-npm run dev
-```
+   ```sh
+   git clone https://github.com/m-zelinka/github-user-search.git
+   ```
 
-## Deployment
+2. Install the dependencies:
 
-First, build your app for production:
+   ```sh
+   npm i
+   ```
 
-```sh
-npm run build
-```
+3. Define required env variables:
 
-Then run the app in production mode:
+   - Create a new [GitHub access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+   - Copy the template contents in [.env.example](.env.example) to a new file named `.env` and fill all the required fields.
 
-```sh
-npm start
-```
+4. Run the application in dev mode:
 
-Now you'll need to pick a host to deploy it to.
+   ```sh
+   npm run dev
+   ```
 
-### DIY
+## Goals
 
-If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
+Practice working with Remix [data loadings APIs](https://remix.run/docs/en/main/guides/data-loading) and using a third-party APIs, like [GitHub GraphQL API](https://docs.github.com/en/graphql).
 
-Make sure to deploy the output of `npm run build`
+## Credits
 
-- `build/server`
-- `build/client`
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever css framework you prefer. See the [Vite docs on css](https://vitejs.dev/guide/features.html#css) for more information.
+- Challenge by [Frontend Mentor](https://www.frontendmentor.io/challenges/github-user-search-app-Q09YOgaH6)
