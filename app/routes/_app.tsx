@@ -1,6 +1,6 @@
 import { ArrowPathIcon, MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Form, Outlet, useNavigation, useSearchParams } from "@remix-run/react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useSpinDelay } from "spin-delay";
 
@@ -55,10 +55,18 @@ function SearchBar() {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Sync search input value with the URL Search Params
+  useEffect(() => {
+    const searchField = inputRef.current;
+    if (searchField) {
+      searchField.value = q ?? "";
+    }
+  }, [q]);
+
   // Focus input on key press
-  const keyboardShortcut = "/";
+  const keyShortcut = "/";
   useHotkeys(
-    keyboardShortcut,
+    keyShortcut,
     () => {
       const searchField = inputRef.current;
       if (searchField) {
@@ -90,14 +98,14 @@ function SearchBar() {
         className="block w-full rounded-md border-0 bg-white/20 py-1.5 pl-10 pr-3 text-white placeholder:text-white focus:bg-white focus:text-gray-900 focus:ring-0 focus:[color-scheme:light] focus:placeholder:text-gray-500 sm:text-sm/6"
         placeholder="Search"
         aria-label="Search users"
-        aria-keyshortcuts={keyboardShortcut}
+        aria-keyshortcuts={keyShortcut}
       />
       <div
         className="absolute inset-y-0 right-0 flex py-1.5 pr-1.5"
         aria-hidden
       >
         <kbd className="inline-flex items-center rounded border border-white/30 px-1 font-sans text-xs text-white group-focus-within:border-gray-200 group-focus-within:text-gray-400">
-          {keyboardShortcut}
+          {keyShortcut}
         </kbd>
       </div>
     </div>
