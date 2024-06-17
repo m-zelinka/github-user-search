@@ -7,7 +7,7 @@ interface Repository {
   name: string;
   primaryLanguage: Maybe<{ color: Maybe<string>; name: string }>;
   repositoryTopics: {
-    nodes: Maybe<Array<{ topic: { name: string } }>>;
+    nodes: Array<{ topic: { name: string } }>;
   };
   stargazerCount: number;
   updatedAt: string;
@@ -28,7 +28,7 @@ export interface User {
   pronouns: Maybe<string>;
   repositories: { totalCount: number };
   topRepositories: {
-    nodes: Maybe<Array<Repository>>;
+    nodes: Array<Repository>;
   };
   twitterUsername: Maybe<string>;
   url: string;
