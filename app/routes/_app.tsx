@@ -16,9 +16,11 @@ export default function Component() {
               </div>
             </div>
             <div className="flex flex-1 justify-end px-2 md:ml-6">
-              <Form className="w-full max-w-lg md:max-w-xs">
-                <SearchBar />
-              </Form>
+              <search role="search" className="w-full max-w-lg md:max-w-xs">
+                <Form>
+                  <SearchBar />
+                </Form>
+              </search>
             </div>
           </div>
         </div>

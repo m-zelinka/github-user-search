@@ -73,6 +73,7 @@ export default function Component() {
 
   return (
     <>
+      <h1 className="sr-only">Search results</h1>
       <div className="overflow-hidden rounded-lg bg-white shadow">
         <div className="p-6 sm:flex sm:items-center sm:justify-between sm:gap-5">
           <img
@@ -97,9 +98,9 @@ export default function Component() {
                 </>
               ) : null}
             </div>
-            <h1 className="truncate text-xl font-bold text-gray-900 sm:text-2xl">
+            <p className="truncate text-xl font-bold text-gray-900 sm:text-2xl">
               {user.name ?? `@${user.login}`}
-            </h1>
+            </p>
             <p className="text-sm font-medium text-gray-600">
               Joined on{" "}
               <time dateTime={user.createdAt}>
