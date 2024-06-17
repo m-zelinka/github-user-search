@@ -4,13 +4,26 @@ import {
   IdentificationIcon,
   RectangleStackIcon,
 } from "@heroicons/react/24/outline";
-import { json, redirect, type LoaderFunctionArgs } from "@remix-run/node";
+import {
+  json,
+  redirect,
+  type LoaderFunctionArgs,
+  type MetaFunction,
+} from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import clsx from "clsx";
 import type { CSSProperties } from "react";
 import { Empty } from "~/components/empty";
 import { getUserByLogin } from "~/utils/github.server";
 import type { User } from "~/utils/types";
+
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  return [
+    {
+      title: data ? data.user.name ?? `@${data.user.login}` : "Not Found",
+    },
+  ];
+};
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
