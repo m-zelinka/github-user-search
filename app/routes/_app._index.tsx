@@ -14,6 +14,7 @@ import { useLoaderData } from "@remix-run/react";
 import clsx from "clsx";
 import type { CSSProperties } from "react";
 import { Empty } from "~/components/empty";
+import { GeneralErrorBoundary } from "~/components/error-boundary";
 import { getUserByLogin } from "~/utils/github.server";
 import type { User } from "~/utils/types";
 
@@ -41,6 +42,16 @@ export async function loader({ request }: LoaderFunctionArgs) {
   });
 
   return json({ user });
+}
+
+export function ErrorBoundary() {
+  return (
+    <div className="overflow-hidden rounded-lg bg-white shadow">
+      <div className="p-6">
+        <GeneralErrorBoundary />
+      </div>
+    </div>
+  );
 }
 
 export default function Component() {
