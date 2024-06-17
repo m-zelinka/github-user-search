@@ -11,7 +11,7 @@ export default {
         sans: ["InterVariable", ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        gray: colors.slate,
+        gray: colors.zinc,
       },
     },
   },

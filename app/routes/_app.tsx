@@ -7,12 +7,12 @@ import { useSpinDelay } from "spin-delay";
 export default function Component() {
   return (
     <div className="min-h-full bg-gray-100">
-      <header className="bg-indigo-600 pb-24 [color-scheme:dark]">
+      <header className="bg-sky-600 pb-24 [color-scheme:dark]">
         <div className="mx-auto max-w-3xl px-2 sm:px-4 lg:px-8">
           <div className="relative flex items-center justify-between py-5">
             <div className="flex items-center max-lg:px-2">
               <div className="flex-none">
-                <Logo className="h-8 w-auto text-indigo-300" />
+                <Logo className="h-8 w-auto text-sky-300" />
               </div>
             </div>
             <div className="flex flex-1 justify-end px-2 md:ml-6">

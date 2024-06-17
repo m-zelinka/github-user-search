@@ -156,7 +156,7 @@ export default function Component() {
                   <span
                     aria-hidden="true"
                     className={clsx(
-                      selected ? "bg-indigo-500" : "bg-transparent",
+                      selected ? "bg-sky-500" : "bg-transparent",
                       "absolute inset-x-0 bottom-0 h-0.5",
                     )}
                   />
@@ -289,7 +289,7 @@ function UserRepoList({
               {repository.repositoryTopics.nodes.map(({ topic }) => (
                 <span
                   key={topic.name}
-                  className="inline-flex items-center rounded-md bg-indigo-50 px-1.5 py-0.5 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10"
+                  className="inline-flex items-center rounded-md bg-sky-50 px-1.5 py-0.5 text-xs font-medium text-sky-700 ring-1 ring-inset ring-sky-700/10"
                 >
                   {topic.name}
                 </span>
@@ -350,7 +350,7 @@ function UserRepoList({
       <li className="relative px-4 py-3 hover:bg-gray-50 sm:px-6">
         <a
           href={`${user.url}?tab=repositories`}
-          className="text-sm/6 font-semibold text-indigo-600"
+          className="text-sm/6 font-semibold text-sky-600"
         >
           <span className="absolute inset-x-0 -top-px bottom-0" />
           View all repositories <span aria-hidden>&rarr;</span>
