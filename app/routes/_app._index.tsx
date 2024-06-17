@@ -201,7 +201,7 @@ function UserProfile({
 
   return (
     <dl className="divide-y divide-gray-100">
-      {Object.entries(profile).map(([label, value]) => (
+      {fieldsToShow.map(([label, value]) => (
         <div
           key={label}
           className="px-4 py-5 text-sm/6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
