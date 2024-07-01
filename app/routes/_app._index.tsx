@@ -1,9 +1,6 @@
 import { invariantResponse } from "@epic-web/invariant";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
-import {
-  IdentificationIcon,
-  RectangleStackIcon,
-} from "@heroicons/react/24/outline";
+import { RectangleStackIcon } from "@heroicons/react/24/outline";
 import {
   json,
   redirect,
@@ -13,6 +10,12 @@ import {
 import { useLoaderData } from "@remix-run/react";
 import clsx from "clsx";
 import type { CSSProperties } from "react";
+import {
+  DataList,
+  DataListItem,
+  DataListLabel,
+  DataListValue,
+} from "~/components/data-list";
 import { Empty } from "~/components/empty";
 import { GeneralErrorBoundary } from "~/components/error-boundary";
 import { getUserByLogin } from "~/utils/github.server";
@@ -67,7 +70,7 @@ export default function Component() {
     { name: "Profile", children: <UserProfile user={user} /> },
     {
       name: "Repositories",
-      children: <UserRepoList user={user} />,
+      children: <UserRepositories user={user} />,
     },
   ];
 
@@ -189,46 +192,73 @@ function UserProfile({
     | "bio"
   >;
 }) {
-  const profile = {
-    "Email address": user.email?.length ? user.email : null,
-    Location: user.location,
-    Company: user.company,
-    Website: user.websiteUrl,
-    Twitter: user.twitterUsername ? `@${user.twitterUsername}` : null,
-    Bio: user.bio,
-  };
-  const fieldsToShow = Object.entries(profile).filter(([, value]) => value);
-
-  if (!fieldsToShow.length) {
-    return (
-      <div className="p-6">
-        <Empty
-          icon={<IdentificationIcon />}
-          title="No details found"
-          description={`It appears that ${user.login}'s profile is empty.`}
-        />
-      </div>
-    );
-  }
-
   return (
-    <dl className="divide-y divide-gray-100">
-      {fieldsToShow.map(([label, value]) => (
-        <div
-          key={label}
-          className="px-4 py-5 text-sm/6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
-        >
-          <dt className="font-medium text-gray-900">{label}</dt>
-          <dd className="text-gray-700 max-sm:mt-1 sm:col-span-2">
-            {value ?? <span className="text-gray-400">N/A</span>}
-          </dd>
-        </div>
-      ))}
-    </dl>
+    <DataList>
+      <DataListItem>
+        <DataListLabel>Email</DataListLabel>
+        <DataListValue>
+          {user.email?.length ? (
+            <a
+              href={`mailto:${user.email}`}
+              className="text-sky-500 hover:underline"
+            >
+              {user.email}
+            </a>
+          ) : (
+            <span className="text-gray-400">N/A</span>
+          )}
+        </DataListValue>
+      </DataListItem>
+      <DataListItem>
+        <DataListLabel>Location</DataListLabel>
+        <DataListValue>
+          {user.location ?? <span className="text-gray-400">N/A</span>}
+        </DataListValue>
+      </DataListItem>
+      <DataListItem>
+        <DataListLabel>Company</DataListLabel>
+        <DataListValue>
+          {user.company ?? <span className="text-gray-400">N/A</span>}
+        </DataListValue>
+      </DataListItem>
+      <DataListItem>
+        <DataListLabel>Website</DataListLabel>
+        <DataListValue>
+          {user.websiteUrl ? (
+            <a href={user.websiteUrl} className="text-sky-500 hover:underline">
+              {user.websiteUrl}
+            </a>
+          ) : (
+            <span className="text-gray-400">N/A</span>
+          )}
+        </DataListValue>
+      </DataListItem>
+      <DataListItem>
+        <DataListLabel>Twitter</DataListLabel>
+        <DataListValue>
+          {user.twitterUsername ? (
+            <a
+              href={`https://twitter.com/${user.twitterUsername}`}
+              className="text-sky-500 hover:underline"
+            >
+              @{user.twitterUsername}
+            </a>
+          ) : (
+            <span className="text-gray-400">N/A</span>
+          )}
+        </DataListValue>
+      </DataListItem>
+      <DataListItem>
+        <DataListLabel>Bio</DataListLabel>
+        <DataListValue>
+          {user.bio ?? <span className="text-gray-400">N/A</span>}
+        </DataListValue>
+      </DataListItem>
+    </DataList>
   );
 }
 
-function UserRepoList({
+function UserRepositories({
   user,
 }: {
   user: Pick<User, "login" | "url" | "topRepositories">;
