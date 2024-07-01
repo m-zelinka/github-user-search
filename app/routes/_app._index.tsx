@@ -1,51 +1,51 @@
-import { invariantResponse } from "@epic-web/invariant";
-import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
-import { RectangleStackIcon } from "@heroicons/react/24/outline";
+import { invariantResponse } from '@epic-web/invariant'
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
+import { RectangleStackIcon } from '@heroicons/react/24/outline'
 import {
   json,
   redirect,
   type LoaderFunctionArgs,
   type MetaFunction,
-} from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
-import clsx from "clsx";
-import type { CSSProperties } from "react";
+} from '@remix-run/node'
+import { useLoaderData } from '@remix-run/react'
+import clsx from 'clsx'
+import type { CSSProperties } from 'react'
 import {
   DataList,
   DataListItem,
   DataListLabel,
   DataListValue,
-} from "~/components/data-list";
-import { Empty } from "~/components/empty";
-import { GeneralErrorBoundary } from "~/components/error-boundary";
-import { StackedList, StackedListItem } from "~/components/stacked-list";
-import { getUserByLogin } from "~/utils/github.server";
-import type { User } from "~/utils/types";
+} from '~/components/data-list'
+import { Empty } from '~/components/empty'
+import { GeneralErrorBoundary } from '~/components/error-boundary'
+import { StackedList, StackedListItem } from '~/components/stacked-list'
+import { getUserByLogin } from '~/utils/github.server'
+import type { User } from '~/utils/types'
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return [
     {
-      title: data ? data.user.name ?? `@${data.user.login}` : "Not Found",
+      title: data ? data.user.name ?? `@${data.user.login}` : 'Not Found',
     },
-  ];
-};
+  ]
+}
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const url = new URL(request.url);
-  const q = url.searchParams.get("q")?.trim();
+  const url = new URL(request.url)
+  const q = url.searchParams.get('q')?.trim()
 
   if (!q) {
-    url.searchParams.set("q", "kentcdodds");
+    url.searchParams.set('q', 'kentcdodds')
 
-    return redirect(url.toString());
+    return redirect(url.toString())
   }
 
-  const user = await getUserByLogin(q);
+  const user = await getUserByLogin(q)
   invariantResponse(user, `No user with the id "${q}" exists.`, {
     status: 404,
-  });
+  })
 
-  return json({ user });
+  return json({ user })
 }
 
 export function ErrorBoundary() {
@@ -55,25 +55,25 @@ export function ErrorBoundary() {
         <GeneralErrorBoundary />
       </div>
     </div>
-  );
+  )
 }
 
 export default function Component() {
-  const { user } = useLoaderData<typeof loader>();
+  const { user } = useLoaderData<typeof loader>()
 
   const stats = {
     Repositories: user.repositories.totalCount,
     Followers: user.followers.totalCount,
     Following: user.following.totalCount,
-  };
+  }
 
   const tabs = [
-    { name: "Profile", children: <UserProfile user={user} /> },
+    { name: 'Profile', children: <UserProfile user={user} /> },
     {
-      name: "Repositories",
+      name: 'Repositories',
       children: <UserRepositories user={user} />,
     },
-  ];
+  ]
 
   return (
     <>
@@ -106,10 +106,10 @@ export default function Component() {
               {user.name ?? `@${user.login}`}
             </p>
             <p className="text-sm font-medium text-gray-600">
-              Joined on{" "}
+              Joined on{' '}
               <time dateTime={user.createdAt}>
-                {new Date(user.createdAt).toLocaleDateString("en-US", {
-                  dateStyle: "long",
+                {new Date(user.createdAt).toLocaleDateString('en-US', {
+                  dateStyle: 'long',
                 })}
               </time>
             </p>
@@ -131,7 +131,7 @@ export default function Component() {
             >
               <dt className="text-gray-600">{label}</dt>
               <dd className="text-gray-900">
-                {value.toLocaleString("en-US", { style: "decimal" })}
+                {value.toLocaleString('en-US', { style: 'decimal' })}
               </dd>
             </div>
           ))}
@@ -144,13 +144,13 @@ export default function Component() {
               key={tab.name}
               className={({ selected, hover, focus }) =>
                 clsx(
-                  selected ? "text-gray-900" : "text-gray-500",
-                  !selected && hover ? "text-gray-700" : "",
-                  tabIndex === 0 ? "rounded-l-lg" : "",
-                  tabIndex === tabs.length - 1 ? "rounded-r-lg" : "",
-                  hover ? "bg-gray-50" : "",
-                  focus ? "z-10" : "",
-                  "group relative min-w-0 flex-1 overflow-hidden bg-white px-4 py-4 text-center text-sm font-medium",
+                  selected ? 'text-gray-900' : 'text-gray-500',
+                  !selected && hover ? 'text-gray-700' : '',
+                  tabIndex === 0 ? 'rounded-l-lg' : '',
+                  tabIndex === tabs.length - 1 ? 'rounded-r-lg' : '',
+                  hover ? 'bg-gray-50' : '',
+                  focus ? 'z-10' : '',
+                  'group relative min-w-0 flex-1 overflow-hidden bg-white px-4 py-4 text-center text-sm font-medium',
                 )
               }
             >
@@ -159,8 +159,8 @@ export default function Component() {
                   <span>{tab.name}</span>
                   <span
                     className={clsx(
-                      selected ? "bg-sky-500" : "bg-transparent",
-                      "absolute inset-x-0 bottom-0 h-0.5",
+                      selected ? 'bg-sky-500' : 'bg-transparent',
+                      'absolute inset-x-0 bottom-0 h-0.5',
                     )}
                     aria-hidden
                   />
@@ -176,7 +176,7 @@ export default function Component() {
         </TabPanels>
       </TabGroup>
     </>
-  );
+  )
 }
 
 function UserProfile({
@@ -184,14 +184,14 @@ function UserProfile({
 }: {
   user: Pick<
     User,
-    | "login"
-    | "email"
-    | "location"
-    | "company"
-    | "websiteUrl"
-    | "twitterUsername"
-    | "bio"
-  >;
+    | 'login'
+    | 'email'
+    | 'location'
+    | 'company'
+    | 'websiteUrl'
+    | 'twitterUsername'
+    | 'bio'
+  >
 }) {
   return (
     <DataList>
@@ -256,13 +256,13 @@ function UserProfile({
         </DataListValue>
       </DataListItem>
     </DataList>
-  );
+  )
 }
 
 function UserRepositories({
   user,
 }: {
-  user: Pick<User, "login" | "url" | "topRepositories">;
+  user: Pick<User, 'login' | 'url' | 'topRepositories'>
 }) {
   if (!user.topRepositories.nodes.length) {
     return (
@@ -273,7 +273,7 @@ function UserRepositories({
           description={`${user.login} doesn't have any public repositories yet.`}
         />
       </div>
-    );
+    )
   }
 
   return (
@@ -296,7 +296,7 @@ function UserRepositories({
                       className="size-1.5 fill-[--color]"
                       style={
                         {
-                          "--color": repository.primaryLanguage.color,
+                          '--color': repository.primaryLanguage.color,
                         } as CSSProperties
                       }
                       aria-hidden
@@ -327,10 +327,10 @@ function UserRepositories({
             ) : null}
             <div className="mt-1 flex items-center gap-x-2 text-xs/5 text-gray-500">
               <p className="whitespace-nowrap">
-                {repository.stargazerCount.toLocaleString("en-US", {
-                  style: "decimal",
-                })}{" "}
-                {repository.stargazerCount === 1 ? "star" : "stars"}
+                {repository.stargazerCount.toLocaleString('en-US', {
+                  style: 'decimal',
+                })}{' '}
+                {repository.stargazerCount === 1 ? 'star' : 'stars'}
               </p>
               <svg
                 viewBox="0 0 2 2"
@@ -340,13 +340,13 @@ function UserRepositories({
                 <circle cx={1} cy={1} r={1} />
               </svg>
               <p className="whitespace-nowrap">
-                {repository.forkCount.toLocaleString("en-US", {
-                  style: "decimal",
-                })}{" "}
-                {repository.forkCount === 1 ? "fork" : "forks"}
+                {repository.forkCount.toLocaleString('en-US', {
+                  style: 'decimal',
+                })}{' '}
+                {repository.forkCount === 1 ? 'fork' : 'forks'}
               </p>
               {repository.licenseInfo &&
-              repository.licenseInfo?.name !== "Other" ? (
+              repository.licenseInfo?.name !== 'Other' ? (
                 <>
                   <svg
                     viewBox="0 0 2 2"
@@ -366,10 +366,10 @@ function UserRepositories({
                 <circle cx={1} cy={1} r={1} />
               </svg>
               <p className="whitespace-nowrap">
-                Updated on{" "}
+                Updated on{' '}
                 <time dateTime={repository.updatedAt}>
-                  {new Date(repository.updatedAt).toLocaleDateString("en-US", {
-                    dateStyle: "medium",
+                  {new Date(repository.updatedAt).toLocaleDateString('en-US', {
+                    dateStyle: 'medium',
                   })}
                 </time>
               </p>
@@ -387,5 +387,5 @@ function UserRepositories({
         </a>
       </div>
     </>
-  );
+  )
 }
