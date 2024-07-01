@@ -97,7 +97,7 @@ function SearchBar() {
         name="q"
         id="q"
         defaultValue={q ?? undefined}
-        className="block w-full rounded-md border-0 bg-white/20 py-1.5 pl-10 pr-3 text-white placeholder:text-white focus:bg-white focus:text-gray-900 focus:ring-0 focus:[color-scheme:light] focus:placeholder:text-gray-500 sm:text-sm/6"
+        className="block w-full rounded-md border-0 bg-white/20 py-1.5 pl-10 pr-8 text-white placeholder:text-white focus:bg-white focus:text-gray-900 focus:ring-0 focus:[color-scheme:light] focus:placeholder:text-gray-500 sm:text-sm/6"
         placeholder="Search"
         aria-label="Search users"
         aria-keyshortcuts={keyShortcut}
