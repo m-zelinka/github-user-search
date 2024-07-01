@@ -154,18 +154,18 @@ export default function Component() {
                 <>
                   <span>{tab.name}</span>
                   <span
-                    aria-hidden="true"
                     className={clsx(
                       selected ? "bg-sky-500" : "bg-transparent",
                       "absolute inset-x-0 bottom-0 h-0.5",
                     )}
+                    aria-hidden
                   />
                 </>
               )}
             </Tab>
           ))}
         </TabList>
-        <TabPanels className="mt-3 overflow-hidden rounded-lg bg-white shadow">
+        <TabPanels className="mt-3 overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-gray-900/5">
           {tabs.map((tab) => (
             <TabPanel key={tab.name}>{tab.children}</TabPanel>
           ))}
